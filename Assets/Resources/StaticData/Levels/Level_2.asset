@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e034370061849568701d0225b98f93b, type: 3}
+  m_Name: Level_2
+  m_EditorClassIdentifier: 
+  SceneId: 4
+  GameLoopLevel: 1
+  TankSpawnPosition: {x: 0, y: 0, z: 0}
+  SecondsBetweenSpawns: 2
+  KilledEnemiesVictoryCount: 5
+  Enemy1Count: 2
+  Enemy2Count: 2
+  Reward: 3
