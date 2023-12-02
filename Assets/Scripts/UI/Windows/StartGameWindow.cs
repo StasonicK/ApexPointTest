@@ -2,6 +2,8 @@ using System;
 using Audio;
 using GameObjects.Tank;
 using Pool;
+using Pool.Enemies;
+using Pool.Projectiles;
 using UI.Screens.GameLoop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,25 +16,27 @@ namespace UI.Windows
         [SerializeField] protected Animator _playButtonAnimator;
 
         private IGameObjectsMover _gameObjectsMover;
-        private IEnemiesGenerator _enemiesGenerator;
         private GameScreen _gameScreen;
         private TankMovement _tankMovement;
         private TankRotation _tankRotation;
         private TankShooting _tankShooting;
         private TankWeaponChanger _tankWeaponChanger;
+        private IEnemiesGenerator _enemiesGenerator;
+        private IProjectilesGenerator _projectilesGenerator;
 
         public event Action PlayButtonClicked;
 
         public void Construct(IGameObjectsMover gameObjectsMover, IEnemiesGenerator enemiesGenerator,
-            GameScreen gameScreen, TankMovement tankMovement, TankRotation tankRotation, TankShooting tankShooting,
-            TankWeaponChanger tankWeaponChanger)
+            IProjectilesGenerator projectilesGenerator, GameScreen gameScreen, TankMovement tankMovement,
+            TankRotation tankRotation, TankShooting tankShooting, TankWeaponChanger tankWeaponChanger)
         {
+            _projectilesGenerator = projectilesGenerator;
+            _enemiesGenerator = enemiesGenerator;
             _tankWeaponChanger = tankWeaponChanger;
             _tankShooting = tankShooting;
             _tankRotation = tankRotation;
             _tankMovement = tankMovement;
             _gameScreen = gameScreen;
-            _enemiesGenerator = enemiesGenerator;
             _gameObjectsMover = gameObjectsMover;
         }
 
@@ -41,6 +45,8 @@ namespace UI.Windows
             _gameObjectsMover.Stop();
             _enemiesGenerator.GameObject.SetActive(true);
             _enemiesGenerator.Off();
+            _projectilesGenerator.GameObject.SetActive(true);
+            _projectilesGenerator.Off();
             _tankRotation.Off();
             _tankMovement.Off();
             _tankShooting.Off();
@@ -56,6 +62,7 @@ namespace UI.Windows
             _gameScreen.gameObject.SetActive(true);
             _gameObjectsMover.Run();
             _enemiesGenerator.On();
+            _projectilesGenerator.On();
             _tankRotation.On();
             _tankMovement.On();
             _tankShooting.On();

@@ -6,30 +6,27 @@ namespace Data
     public class GameData
     {
         public int MoneyCount;
-        public int HealthCount;
-        public int TempHealthCount;
+        public float HealthCount;
+        public float TempHealthCount;
+        public float Armor;
 
         public event Action TempHealthCountChangedUp;
         public event Action TempHealthCountChangedDown;
 
         public GameData(SceneId sceneId)
         {
-            if (sceneId == SceneId.Main)
+            if (sceneId == SceneId.Level_1)
             {
                 MoneyCount = 0;
-                HealthCount = 5;
+                HealthCount = 10;
+                TempHealthCount = 10;
+                Armor = 0.5f;
             }
         }
 
-        public void IncreaseLifes()
+        public void RefreshHealth(float damage)
         {
-            TempHealthCount++;
-            TempHealthCountChangedUp?.Invoke();
-        }
-
-        public void ReduceLifes()
-        {
-            TempHealthCount--;
+            TempHealthCount -= damage;
             TempHealthCountChangedDown?.Invoke();
         }
 

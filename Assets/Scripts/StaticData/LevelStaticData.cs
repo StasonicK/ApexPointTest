@@ -15,10 +15,9 @@ namespace StaticData
         [Range(1, 10)] public int KilledEnemiesVictoryCount = 1;
         [Range(1, 10)] public int Enemy1Count = 1;
         [Range(1, 10)] public int Enemy2Count = 1;
+        [Range(1, 10)] public int MaxActiveEnemies = 1;
         [Range(1, 10)] public int Reward;
 
         public List<Vector3> EnemySpawners;
-        // public List<EnemySpawnerData> Enemy1;
-        // public List<EnemySpawnerData> Enemy2;
     }
 }

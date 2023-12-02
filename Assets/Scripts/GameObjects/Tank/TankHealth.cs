@@ -1,4 +1,5 @@
-﻿using Pool;
+﻿using System;
+using Pool;
 using Services;
 using Services.PersistentProgress;
 using UI.Windows;
@@ -6,46 +7,56 @@ using UnityEngine;
 
 namespace GameObjects.Tank
 {
-    public class TankHealth : MonoBehaviour
+    public class TankHealth : MonoBehaviour, IHealth
     {
-        [SerializeField] private int _healthCount;
+        [SerializeField] private float _healthCount;
 
         private IPlayerProgressService _playerProgressService;
         private TankMovement _tankMovement;
-        private TankDeath _tankDeath;
+        private TankDeathVfx _tankDeathVfx;
         private GameOverWindow _gameOverWindow;
-        private TankHit _tankHit;
+        private TankHitVfx _tankHitVfx;
         private IGameObjectsMover _gameObjectsMover;
+        private float _armor;
 
-        public void Construct(TankMovement tankMovement, TankDeath tankDeath,
-            TankHit tankHit, IGameObjectsMover gameObjectsMover,
-            GameOverWindow gameOverWindow)
+        public float Max { get; private set; }
+        public float Current { get; private set; }
+
+        public event Action HealthChanged;
+
+        public void Construct(TankMovement tankMovement, TankDeathVfx tankDeathVfx, TankHitVfx tankHitVfx,
+            IGameObjectsMover gameObjectsMover, GameOverWindow gameOverWindow)
         {
             _gameObjectsMover = gameObjectsMover;
-            _tankHit = tankHit;
+            _tankHitVfx = tankHitVfx;
             _gameOverWindow = gameOverWindow;
-            _tankDeath = tankDeath;
+            _tankDeathVfx = tankDeathVfx;
             _tankMovement = tankMovement;
             _playerProgressService = AllServices.Container.Single<IPlayerProgressService>();
-            _healthCount = _playerProgressService.GameData.HealthCount;
-        }
-
-        public void Reduce()
-        {
-            _playerProgressService.GameData.ReduceLifes();
-
-            if (_playerProgressService.GameData.TempHealthCount == 0)
-                Die();
-            else
-                _tankHit.Show();
+            Max = _playerProgressService.GameData.HealthCount;
+            Current = _playerProgressService.GameData.HealthCount;
+            _armor = _playerProgressService.GameData.Armor;
         }
 
         private void Die()
         {
-            _tankDeath.Show();
+            _tankDeathVfx.Show();
             _tankMovement.Off();
             _gameObjectsMover.Stop();
             _gameOverWindow.Open();
+        }
+
+        public void GetHit(float damage)
+        {
+            Current = _playerProgressService.GameData.TempHealthCount -= damage * _armor;
+
+            if (Current > 0f)
+                _playerProgressService.GameData.RefreshHealth(_healthCount);
+            else
+                Die();
+
+            _tankHitVfx.Show();
+            HealthChanged?.Invoke();
         }
     }
 }

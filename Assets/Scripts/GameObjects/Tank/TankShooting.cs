@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using GameObjects.Projectiles;
+using Pool.Projectiles;
+using Services.StaticData;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,29 +13,26 @@ namespace GameObjects.Tank
         [SerializeField] private MachineGunType _machineGunProjectilePrefab;
         [SerializeField] private Transform _bigGunSpawnTransform;
         [SerializeField] private Transform _machineGunSpawnTransform;
-        [SerializeField] private float _bigGunWeaponCooldown;
-        [SerializeField] private float _machineGunWeaponCooldown;
 
         private TankInput _tankInput;
         private TankWeaponChanger _tankWeaponChanger;
         private BaseGunType _currentProjectilePrefab;
         private Transform _currentTransformPosition;
         private float _currentWeaponCooldown;
-        private WaitForSeconds _coroutineBigGunLaunchCooldown;
-        private WaitForSeconds _coroutineMachineGunLaunchCooldown;
         private WaitForSeconds _coroutineCurrentGunLaunchCooldown;
         private Coroutine _startCoroutine;
+        private GameObject _projectile;
+        private IStaticDataService _staticDataService;
+        private WeaponTypeId _weaponTypeId;
+        private float _cooldown;
+        private IProjectilesGenerator _projectilesGenerator;
 
-
-        public void Construct(TankWeaponChanger tankWeaponChanger
-            // , float weapon1Cooldown, float weapon2Cooldown
-        )
+        public void Construct(TankWeaponChanger tankWeaponChanger, IStaticDataService staticDataService,
+            IProjectilesGenerator projectilesGenerator)
         {
+            _projectilesGenerator = projectilesGenerator;
+            _staticDataService = staticDataService;
             _currentWeaponCooldown = 0f;
-            _coroutineBigGunLaunchCooldown = new WaitForSeconds(_bigGunWeaponCooldown);
-            _coroutineMachineGunLaunchCooldown = new WaitForSeconds(_machineGunWeaponCooldown);
-            // _weapon2Cooldown = weapon2Cooldown;
-            // _weapon1Cooldown = weapon1Cooldown;
             _tankWeaponChanger = tankWeaponChanger;
             _tankWeaponChanger.GotWeapon1 -= SelectWeapon1;
             _tankWeaponChanger.GotWeapon2 -= SelectWeapon2;
@@ -47,12 +46,14 @@ namespace GameObjects.Tank
         {
             _currentProjectilePrefab = _bigGunProjectilePrefab;
             _currentTransformPosition = _bigGunSpawnTransform;
+            _weaponTypeId = WeaponTypeId.BigGun;
         }
 
         private void SelectWeapon2()
         {
             _currentProjectilePrefab = _machineGunProjectilePrefab;
             _currentTransformPosition = _machineGunSpawnTransform;
+            _weaponTypeId = WeaponTypeId.MachineGun;
         }
 
         public void On()
@@ -60,7 +61,7 @@ namespace GameObjects.Tank
             if (_tankInput != null)
             {
                 _tankInput.Enable();
-                _tankInput.Tank.Shoot.performed += Shoot;
+                _tankInput.Tank.Shoot.started += Shoot;
             }
         }
 
@@ -70,7 +71,7 @@ namespace GameObjects.Tank
             if (_tankInput != null)
             {
                 _tankInput.Disable();
-                _tankInput.Tank.Shoot.performed -= Shoot;
+                _tankInput.Tank.Shoot.started -= Shoot;
             }
         }
 
@@ -78,8 +79,16 @@ namespace GameObjects.Tank
         {
             if (_currentWeaponCooldown <= 0)
             {
-                Instantiate(_currentProjectilePrefab, _currentTransformPosition.position,
-                    _currentTransformPosition.rotation);
+                _projectilesGenerator.GetProjectile(_weaponTypeId, _currentTransformPosition);
+                // Instantiate(_currentProjectilePrefab, _currentTransformPosition.position,
+                //         _currentTransformPosition.rotation)
+                //     .gameObject.GetComponent<ProjectileCollisionHandler>()
+                //     .Construct(_staticDataService.ForWeapon(_weaponTypeId).Damage);
+                // _projectile = 
+                //     Instantiate(_currentProjectilePrefab, _currentTransformPosition.position,
+                //     _currentTransformPosition.rotation).gameObject;
+                // _projectile.GetComponent<ProjectileCollisionHandler>()
+                //     .Construct(_staticDataService.ForWeapon(_weaponTypeId).Damage);
 
                 SetCoroutineCooldown();
 
@@ -92,10 +101,8 @@ namespace GameObjects.Tank
 
         private void SetCoroutineCooldown()
         {
-            if (_currentProjectilePrefab == _bigGunProjectilePrefab)
-                _coroutineCurrentGunLaunchCooldown = _coroutineBigGunLaunchCooldown;
-            else
-                _coroutineCurrentGunLaunchCooldown = _coroutineMachineGunLaunchCooldown;
+            _cooldown = _staticDataService.ForWeapon(_weaponTypeId).Cooldown;
+            _coroutineCurrentGunLaunchCooldown = new WaitForSeconds(_cooldown);
         }
 
         private IEnumerator CoroutineLaunchCooldown()

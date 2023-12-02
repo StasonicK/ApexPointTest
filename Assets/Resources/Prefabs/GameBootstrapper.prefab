@@ -48,9 +48,11 @@ MonoBehaviour:
     type: 3}
   _uiContainerPrefab: {fileID: 9068242457726499202, guid: 89ffd37fb33d9f848a37e089feddf791,
     type: 3}
-  _objectsContainerPrefab: {fileID: 2995469325916489997, guid: 83996826f8efdb044a7cc13db0713b95,
+  _enemiesContainerPrefab: {fileID: 2995469325916489997, guid: 83996826f8efdb044a7cc13db0713b95,
     type: 3}
-  _objectsGeneratorPrefab: {fileID: 1187051873353853133, guid: 559ba2230bbc87d429686f48729c4bd3,
+  _projectilesContainerPrefab: {fileID: 2995469325916489997, guid: a1be0f7ffbccc2247b961e16652b7cce,
     type: 3}
-  _gameManagerPrefab: {fileID: 4513201168012028667, guid: 37dac5ffac3ee304fbbaf9a62d6b9714,
+  _enemiesGeneratorPrefab: {fileID: 1187051873353853133, guid: 559ba2230bbc87d429686f48729c4bd3,
+    type: 3}
+  _projectilesGeneratorPrefab: {fileID: 1187051873353853133, guid: adeb3ed498d0908449bc12c2038cce61,
     type: 3}

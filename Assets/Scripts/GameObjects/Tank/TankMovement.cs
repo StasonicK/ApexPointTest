@@ -9,7 +9,6 @@ namespace GameObjects.Tank
         [SerializeField] private float _speed;
 
         private float _movementEpsilon = 0.05f;
-        private CharacterController _characterController;
         private TankInput _tankInput;
         private Vector2 _moveInput = Vector2.zero;
         private Vector2 _currentMoveInput = Vector2.zero;
@@ -19,7 +18,6 @@ namespace GameObjects.Tank
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _characterController = GetComponent<CharacterController>();
             DontDestroyOnLoad(this);
         }
 
@@ -46,7 +44,7 @@ namespace GameObjects.Tank
             if (_tankInput != null)
             {
                 _tankInput.Enable();
-                _tankInput.Tank.Move.performed += Move;
+                _tankInput.Tank.Move.started += Move;
                 _tankInput.Tank.Move.canceled += Stop;
             }
 
@@ -59,7 +57,7 @@ namespace GameObjects.Tank
             if (_tankInput != null)
             {
                 _tankInput.Disable();
-                _tankInput.Tank.Move.performed -= Move;
+                _tankInput.Tank.Move.started -= Move;
                 _tankInput.Tank.Move.canceled -= Stop;
             }
 

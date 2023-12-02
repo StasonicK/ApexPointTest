@@ -1,4 +1,6 @@
-﻿namespace Pool
+﻿using Pool.Enemies;
+
+namespace Pool
 {
     public interface IGameObjectsMover
     {

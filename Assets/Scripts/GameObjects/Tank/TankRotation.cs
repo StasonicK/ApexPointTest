@@ -34,7 +34,7 @@ namespace GameObjects.Tank
             if (_tankInput != null)
             {
                 _tankInput.Enable();
-                _tankInput.Tank.RotateHull.performed += Rotate;
+                _tankInput.Tank.RotateHull.started += Rotate;
                 _tankInput.Tank.RotateHull.canceled += Stop;
             }
 
@@ -46,7 +46,7 @@ namespace GameObjects.Tank
             if (_tankInput != null)
             {
                 _tankInput.Disable();
-                _tankInput.Tank.RotateHull.performed -= Rotate;
+                _tankInput.Tank.RotateHull.started -= Rotate;
                 _tankInput.Tank.RotateHull.canceled -= Stop;
             }
 

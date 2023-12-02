@@ -219,6 +219,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 351676126888491402, guid: b6be12fce35bc2a4d9b222cb37630c75,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 2637486836357984637, guid: b6be12fce35bc2a4d9b222cb37630c75,
         type: 3}
       propertyPath: m_Mesh
@@ -227,43 +232,13 @@ PrefabInstance:
     - target: {fileID: 2637486836357984637, guid: b6be12fce35bc2a4d9b222cb37630c75,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 823
-      objectReference: {fileID: 0}
-    - target: {fileID: 3678359592924649829, guid: b6be12fce35bc2a4d9b222cb37630c75,
-        type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5414412034898026405, guid: b6be12fce35bc2a4d9b222cb37630c75,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5414412034898026405, guid: b6be12fce35bc2a4d9b222cb37630c75,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167375655932636267, guid: b6be12fce35bc2a4d9b222cb37630c75,
-        type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167375657326817678, guid: b6be12fce35bc2a4d9b222cb37630c75,
-        type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
+      value: 829
       objectReference: {fileID: 0}
     - target: {fileID: 6636199908406649777, guid: b6be12fce35bc2a4d9b222cb37630c75,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1774388893}
-    - target: {fileID: 7393437191041715114, guid: b6be12fce35bc2a4d9b222cb37630c75,
-        type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7507456096758179866, guid: b6be12fce35bc2a4d9b222cb37630c75,
         type: 3}
       propertyPath: m_Name
@@ -332,7 +307,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-42546
+  m_Name: pb_Mesh-476350
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

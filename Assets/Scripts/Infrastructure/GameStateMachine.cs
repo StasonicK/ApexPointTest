@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Infrastructure.States;
 using Pool;
+using Pool.Enemies;
+using Pool.Projectiles;
 using Services;
 using Services.PersistentProgress;
 using Services.SaveLoad;
@@ -17,8 +19,8 @@ namespace Infrastructure
         private IExitableState _activeState;
 
         public GameStateMachine(ISceneLoader sceneLoader, AllServices services, GameObject tank,
-            IUIContainer uiContainer, IEnemiesContainer enemiesContainer,
-            IEnemiesGenerator enemiesGenerator,
+            IUIContainer uiContainer, IEnemiesContainer enemiesContainer, IProjectilesContainer projectilesContainer,
+            IEnemiesGenerator enemiesGenerator, IProjectilesGenerator projectilesGenerator,
             IGameObjectsMover gameObjectsMover)
         {
             _states = new Dictionary<Type, IExitableState>()
@@ -27,7 +29,8 @@ namespace Infrastructure
                 [typeof(LoadSceneState)] =
                     new LoadSceneState(this, sceneLoader, services.Single<IPlayerProgressService>(),
                         services.Single<ISaveLoadService>(), services.Single<IStaticDataService>(), tank, uiContainer,
-                        enemiesContainer, enemiesGenerator, gameObjectsMover),
+                        enemiesContainer, projectilesContainer, enemiesGenerator, projectilesGenerator,
+                        gameObjectsMover),
                 [typeof(LoadPlayerProgressState)] =
                     new LoadPlayerProgressState(this, services.Single<IPlayerProgressService>(),
                         services.Single<ISaveLoadService>()),

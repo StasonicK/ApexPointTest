@@ -10,6 +10,8 @@ TagManager:
   - Enemy
   - Projectile
   - TankInitialPoint
+  - EnemySpawnPoint
+  - Ground
   layers:
   - Default
   - TransparentFX

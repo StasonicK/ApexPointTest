@@ -19,6 +19,7 @@ MonoBehaviour:
   KilledEnemiesVictoryCount: 3
   Enemy1Count: 2
   Enemy2Count: 2
+  MaxActiveEnemies: 4
   Reward: 2
   EnemySpawners:
   - {x: -20, y: 0, z: -20.000004}

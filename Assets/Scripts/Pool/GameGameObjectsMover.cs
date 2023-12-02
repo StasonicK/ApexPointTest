@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameObjects;
 using GameObjects.Enemies;
+using Pool.Enemies;
 using UnityEngine;
 
 namespace Pool
@@ -19,13 +20,13 @@ namespace Pool
             if (_enemiesGenerator == null)
                 return;
 
-            if (_enemiesGenerator.EnemiesDictionary == null)
+            if (_enemiesGenerator.ProjectilesDictionary == null)
                 return;
 
-            if (_enemiesGenerator.EnemiesDictionary.Count == 0)
+            if (_enemiesGenerator.ProjectilesDictionary.Count == 0)
                 return;
 
-            foreach (KeyValuePair<EnemyTypeId, List<GameObject>> pair in _enemiesGenerator.EnemiesDictionary)
+            foreach (KeyValuePair<EnemyTypeId, List<GameObject>> pair in _enemiesGenerator.ProjectilesDictionary)
             {
                 foreach (GameObject gameObject in pair.Value)
                     gameObject.GetComponent<IGameObjectMovement>()?.Run();
@@ -37,13 +38,13 @@ namespace Pool
             if (_enemiesGenerator == null)
                 return;
 
-            if (_enemiesGenerator.EnemiesDictionary == null)
+            if (_enemiesGenerator.ProjectilesDictionary == null)
                 return;
 
-            if (_enemiesGenerator.EnemiesDictionary.Count == 0)
+            if (_enemiesGenerator.ProjectilesDictionary.Count == 0)
                 return;
 
-            foreach (KeyValuePair<EnemyTypeId, List<GameObject>> pair in _enemiesGenerator.EnemiesDictionary)
+            foreach (KeyValuePair<EnemyTypeId, List<GameObject>> pair in _enemiesGenerator.ProjectilesDictionary)
             {
                 foreach (GameObject gameObject in pair.Value)
                     gameObject.GetComponent<IGameObjectMovement>()?.Stop();

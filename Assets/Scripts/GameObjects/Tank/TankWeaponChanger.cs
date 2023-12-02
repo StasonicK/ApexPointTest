@@ -11,7 +11,7 @@ namespace GameObjects.Tank
 
         private TankInput _tankInput;
 
-        public WeaponType CurrentWeaponType { get; private set; }
+        public WeaponTypeId CurrentWeaponTypeId { get; private set; }
 
         public event Action GotWeapon1;
         public event Action GotWeapon2;
@@ -48,18 +48,18 @@ namespace GameObjects.Tank
 
         private void SetWeapon1(InputAction.CallbackContext obj)
         {
-            if (CurrentWeaponType != WeaponType.BigGun)
+            if (CurrentWeaponTypeId != WeaponTypeId.BigGun)
             {
-                CurrentWeaponType = WeaponType.BigGun;
+                CurrentWeaponTypeId = WeaponTypeId.BigGun;
                 SetWeapon1();
             }
         }
 
         private void SetWeapon2(InputAction.CallbackContext obj)
         {
-            if (CurrentWeaponType != WeaponType.MachineGun)
+            if (CurrentWeaponTypeId != WeaponTypeId.MachineGun)
             {
-                CurrentWeaponType = WeaponType.MachineGun;
+                CurrentWeaponTypeId = WeaponTypeId.MachineGun;
                 SetWeapon2();
             }
         }
