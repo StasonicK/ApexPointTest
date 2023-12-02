@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using System.Collections.Generic;
+using Infrastructure;
 using UnityEngine;
 
 namespace StaticData
@@ -8,12 +9,16 @@ namespace StaticData
     {
         public SceneId SceneId;
         public bool GameLoopLevel;
-        public Vector3 TankSpawnPosition;
+        public Vector3 InitialTankPosition;
 
         [Range(1f, 10f)] public float SecondsBetweenSpawns = 1.0f;
         [Range(1, 10)] public int KilledEnemiesVictoryCount = 1;
         [Range(1, 10)] public int Enemy1Count = 1;
         [Range(1, 10)] public int Enemy2Count = 1;
         [Range(1, 10)] public int Reward;
+
+        public List<Vector3> EnemySpawners;
+        // public List<EnemySpawnerData> Enemy1;
+        // public List<EnemySpawnerData> Enemy2;
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Pool
 {
-    public class GameObjectsContainer : MonoBehaviour, IGameObjectsContainer
+    public class EnemiesContainer : MonoBehaviour, IEnemiesContainer
     {
         [HideInInspector] public List<GameObject> List { get; private set; }
 

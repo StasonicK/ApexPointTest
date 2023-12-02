@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0b46df596e422bbfa2f2958651cd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy1Prefab: {fileID: 5716693404105223208, guid: 4d9daf342a5e0094a90d813b22841658,
+  _enemy1Prefab: {fileID: -1421623012343167878, guid: 53b5ba85a083b704b9ffd567873a0401,
     type: 3}
-  _enemy2Prefab: {fileID: 7194099560642298509, guid: 0695b7fd857cc4942b5645dad35a8106,
+  _enemy2Prefab: {fileID: -7115962901785244282, guid: 07df327cfe427124fbd88ca284ce8c9b,
     type: 3}
-  _ySpawnPosition: 2
+  _ySpawnPosition: 1
 --- !u!114 &5511715957387077562
 MonoBehaviour:
   m_ObjectHideFlags: 0

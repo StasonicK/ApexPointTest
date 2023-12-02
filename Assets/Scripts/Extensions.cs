@@ -20,4 +20,7 @@ public static class Extensions
         Color color = image.color;
         image.color = new Color(color.r, color.g, color.g, targetAlpha);
     }
+
+    public static Vector3 AddY(this Vector3 position, float y) =>
+        new Vector3(position.x, position.y + y, position.z);
 }

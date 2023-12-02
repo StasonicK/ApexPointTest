@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6423139201508590989}
   - component: {fileID: 6423139201508590995}
-  - component: {fileID: 8419192446675163282}
   - component: {fileID: 6423139201278857184}
   - component: {fileID: 6423139201278857183}
+  - component: {fileID: 8419192446675163282}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -44,21 +44,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6423139201508590992}
   m_Enabled: 1
---- !u!114 &8419192446675163282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6423139201508590992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 133efefffc7340439e4ccc1cde72bde0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rotationAngleX: 55
-  _distance: 3
-  _offsetY: 0.5
 --- !u!20 &6423139201278857184
 Camera:
   m_ObjectHideFlags: 0
@@ -135,6 +120,21 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &8419192446675163282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423139201508590992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133efefffc7340439e4ccc1cde72bde0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationAngleX: 55
+  _distance: 10
+  _offsetY: 0.5
 --- !u!1001 &2527459192200095539
 PrefabInstance:
   m_ObjectHideFlags: 0

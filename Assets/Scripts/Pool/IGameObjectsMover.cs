@@ -2,7 +2,7 @@
 {
     public interface IGameObjectsMover
     {
-        void Construct(IGameObjectsGenerator gameObjectsGenerator);
+        void Construct(IEnemiesGenerator enemiesGenerator);
         void Run();
         void Stop();
     }

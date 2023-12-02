@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Pool
 {
-    public interface IGameObjectsContainer : IGameObject
+    public interface IEnemiesContainer : IGameObject
     {
         List<GameObject> List { get; }
         void Add(GameObject item);

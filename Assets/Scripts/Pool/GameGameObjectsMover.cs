@@ -7,25 +7,25 @@ namespace Pool
 {
     public class GameGameObjectsMover : MonoBehaviour, IGameObjectsMover
     {
-        private IGameObjectsGenerator _gameObjectsGenerator;
+        private IEnemiesGenerator _enemiesGenerator;
 
-        public void Construct(IGameObjectsGenerator gameObjectsGenerator)
+        public void Construct(IEnemiesGenerator enemiesGenerator)
         {
-            _gameObjectsGenerator = gameObjectsGenerator;
+            _enemiesGenerator = enemiesGenerator;
         }
 
         public void Run()
         {
-            if (_gameObjectsGenerator == null)
+            if (_enemiesGenerator == null)
                 return;
 
-            if (_gameObjectsGenerator.GameObjectsDictionary == null)
+            if (_enemiesGenerator.EnemiesDictionary == null)
                 return;
 
-            if (_gameObjectsGenerator.GameObjectsDictionary.Count == 0)
+            if (_enemiesGenerator.EnemiesDictionary.Count == 0)
                 return;
 
-            foreach (KeyValuePair<EnemyType, List<GameObject>> pair in _gameObjectsGenerator.GameObjectsDictionary)
+            foreach (KeyValuePair<EnemyTypeId, List<GameObject>> pair in _enemiesGenerator.EnemiesDictionary)
             {
                 foreach (GameObject gameObject in pair.Value)
                     gameObject.GetComponent<IGameObjectMovement>()?.Run();
@@ -34,16 +34,16 @@ namespace Pool
 
         public void Stop()
         {
-            if (_gameObjectsGenerator == null)
+            if (_enemiesGenerator == null)
                 return;
 
-            if (_gameObjectsGenerator.GameObjectsDictionary == null)
+            if (_enemiesGenerator.EnemiesDictionary == null)
                 return;
 
-            if (_gameObjectsGenerator.GameObjectsDictionary.Count == 0)
+            if (_enemiesGenerator.EnemiesDictionary.Count == 0)
                 return;
 
-            foreach (KeyValuePair<EnemyType, List<GameObject>> pair in _gameObjectsGenerator.GameObjectsDictionary)
+            foreach (KeyValuePair<EnemyTypeId, List<GameObject>> pair in _enemiesGenerator.EnemiesDictionary)
             {
                 foreach (GameObject gameObject in pair.Value)
                     gameObject.GetComponent<IGameObjectMovement>()?.Stop();

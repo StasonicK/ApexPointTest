@@ -16,14 +16,14 @@ namespace UI.Windows
         [SerializeField] private AudioSlider _audioSlider;
 
         private ISaveLoadService _saveLoadService;
-        private IGameObjectsGenerator _gameObjectsGenerator;
+        private IEnemiesGenerator _enemiesGenerator;
 
         public event Action CloseButtonClicked;
         public event Action RestartButtonClicked;
 
-        public void Construct(IGameObjectsGenerator gameObjectsGenerator)
+        public void Construct(IEnemiesGenerator enemiesGenerator)
         {
-            _gameObjectsGenerator = gameObjectsGenerator;
+            _enemiesGenerator = enemiesGenerator;
             _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
             _audioCheckBox.Construct();
             _audioSlider.Construct();

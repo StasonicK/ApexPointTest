@@ -9,6 +9,7 @@ TagManager:
   - Tank
   - Enemy
   - Projectile
+  - TankInitialPoint
   layers:
   - Default
   - TransparentFX

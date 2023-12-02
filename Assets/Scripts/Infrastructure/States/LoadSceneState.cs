@@ -16,6 +16,7 @@ namespace Infrastructure.States
     public class LoadSceneState : IPayloadedState<SceneId>
     {
         private const string LevelName = "Level_";
+        private const float Yaddition = 0.5f;
 
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;
@@ -25,11 +26,10 @@ namespace Infrastructure.States
         private SceneId _sceneId;
         private bool _isInitial = true;
         private GameObject _tank;
-        private IGameObjectsContainer _gameObjectsContainer;
-        private IGameObjectsGenerator _gameObjectsGenerator;
+        private IEnemiesContainer _enemiesContainer;
+        private IEnemiesGenerator _enemiesGenerator;
         private IUIContainer _uiContainer;
         private LevelStaticData _levelStaticData;
-        private Vector3 _tankSpawnPosition;
         private TankMovement _tankMovement;
         private IGameObjectsMover _gameObjectsMover;
         private TankRotation _tankRotation;
@@ -39,10 +39,10 @@ namespace Infrastructure.States
         public LoadSceneState(IGameStateMachine gameGameStateMachine, ISceneLoader sceneLoader,
             IPlayerProgressService playerProgressService, ISaveLoadService saveLoadService,
             IStaticDataService staticDataService, GameObject tank, IUIContainer uiContainer,
-            IGameObjectsContainer gameObjectsContainer, IGameObjectsGenerator gameObjectsGenerator,
+            IEnemiesContainer enemiesContainer, IEnemiesGenerator enemiesGenerator,
             IGameObjectsMover gameObjectsMover)
         {
-            _gameObjectsGenerator = gameObjectsGenerator;
+            _enemiesGenerator = enemiesGenerator;
             _gameObjectsMover = gameObjectsMover;
             _gameStateMachine = gameGameStateMachine;
             _sceneLoader = sceneLoader;
@@ -51,7 +51,7 @@ namespace Infrastructure.States
             _staticDataService = staticDataService;
             _tank = tank;
             _uiContainer = uiContainer;
-            _gameObjectsContainer = gameObjectsContainer;
+            _enemiesContainer = enemiesContainer;
             _tankMovement = _tank.GetComponent<TankMovement>();
             _tankRotation = _tank.GetComponentInChildren<TankRotation>();
             _tankShooting = _tank.GetComponentInChildren<TankShooting>();
@@ -81,8 +81,8 @@ namespace Infrastructure.States
         private void ClearGameWorld()
         {
             _tank.SetActive(false);
-            _gameObjectsContainer.GameObject.SetActive(false);
-            _gameObjectsGenerator.GameObject.SetActive(false);
+            _enemiesContainer.GameObject.SetActive(false);
+            _enemiesGenerator.GameObject.SetActive(false);
             _uiContainer.HideAll();
         }
 
@@ -103,9 +103,9 @@ namespace Infrastructure.States
         private void InitializeUIRoot(int victoryCount)
         {
             _uiContainer.GameObject.SetActive(true);
-            _uiContainer.StartGameWindow.Construct(_gameObjectsMover, _gameObjectsGenerator, _uiContainer.GameScreen,
+            _uiContainer.StartGameWindow.Construct(_gameObjectsMover, _enemiesGenerator, _uiContainer.GameScreen,
                 _tankMovement, _tankRotation, _tankShooting, _tankWeaponChanger);
-            _uiContainer.GameOverWindow.Construct(_gameObjectsGenerator, _tankMovement, _tankRotation, _tankShooting,
+            _uiContainer.GameOverWindow.Construct(_enemiesGenerator, _tankMovement, _tankRotation, _tankShooting,
                 _gameStateMachine);
             _uiContainer.FinishLevelWindow.Construct(_sceneId, victoryCount);
             _uiContainer.Construct();
@@ -121,22 +121,20 @@ namespace Infrastructure.States
 
         private void InitializeGameWorld(LevelStaticData levelData)
         {
-            _tankSpawnPosition = levelData.TankSpawnPosition;
-            _gameObjectsGenerator.Construct(levelData.Enemy1Count, levelData.Enemy2Count,
-                levelData.SecondsBetweenSpawns, _gameObjectsContainer);
-            _gameObjectsMover.Construct(_gameObjectsGenerator);
-            _gameObjectsContainer.GameObject.SetActive(true);
+            _enemiesGenerator.Construct(_enemiesContainer, levelData.Enemy1Count, levelData.Enemy2Count,
+                levelData.SecondsBetweenSpawns, levelData.EnemySpawners, _tank.transform);
+            _gameObjectsMover.Construct(_enemiesGenerator);
+            _enemiesContainer.GameObject.SetActive(true);
         }
 
         private void InstantiateGameObjects()
         {
-            _tank.transform.position = _tankSpawnPosition;
             _tank.SetActive(true);
         }
 
         private void InitializeGameObjects()
         {
-            _tankMovement.Construct(_levelStaticData.TankSpawnPosition);
+            _tankMovement.Construct(_levelStaticData.InitialTankPosition.AddY(Yaddition));
             _tankRotation.Construct();
             _tankWeaponChanger.Construct();
             _tankShooting.Construct(_tankWeaponChanger);

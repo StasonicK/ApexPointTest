@@ -14,7 +14,7 @@ namespace UI.Windows
         [SerializeField] protected Animator _playButtonAnimator;
 
         private IGameObjectsMover _gameObjectsMover;
-        private IGameObjectsGenerator _gameObjectsGenerator;
+        private IEnemiesGenerator _enemiesGenerator;
         private GameScreen _gameScreen;
         private TankMovement _tankMovement;
         private TankRotation _tankRotation;
@@ -23,7 +23,7 @@ namespace UI.Windows
 
         public event Action PlayButtonClicked;
 
-        public void Construct(IGameObjectsMover gameObjectsMover, IGameObjectsGenerator gameObjectsGenerator,
+        public void Construct(IGameObjectsMover gameObjectsMover, IEnemiesGenerator enemiesGenerator,
             GameScreen gameScreen, TankMovement tankMovement, TankRotation tankRotation, TankShooting tankShooting,
             TankWeaponChanger tankWeaponChanger)
         {
@@ -32,14 +32,15 @@ namespace UI.Windows
             _tankRotation = tankRotation;
             _tankMovement = tankMovement;
             _gameScreen = gameScreen;
-            _gameObjectsGenerator = gameObjectsGenerator;
+            _enemiesGenerator = enemiesGenerator;
             _gameObjectsMover = gameObjectsMover;
         }
 
         public void Open()
         {
             _gameObjectsMover.Stop();
-            _gameObjectsGenerator.Off();
+            _enemiesGenerator.GameObject.SetActive(true);
+            _enemiesGenerator.Off();
             _tankRotation.Off();
             _tankMovement.Off();
             _tankShooting.Off();
@@ -54,7 +55,7 @@ namespace UI.Windows
             _playButton.onClick.RemoveListener(OnPlayButtonClick);
             _gameScreen.gameObject.SetActive(true);
             _gameObjectsMover.Run();
-            _gameObjectsGenerator.On();
+            _enemiesGenerator.On();
             _tankRotation.On();
             _tankMovement.On();
             _tankShooting.On();

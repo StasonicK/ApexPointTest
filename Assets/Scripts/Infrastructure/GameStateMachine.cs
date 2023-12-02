@@ -17,8 +17,8 @@ namespace Infrastructure
         private IExitableState _activeState;
 
         public GameStateMachine(ISceneLoader sceneLoader, AllServices services, GameObject tank,
-            IUIContainer uiContainer, IGameObjectsContainer gameObjectsContainer,
-            IGameObjectsGenerator gameObjectsGenerator,
+            IUIContainer uiContainer, IEnemiesContainer enemiesContainer,
+            IEnemiesGenerator enemiesGenerator,
             IGameObjectsMover gameObjectsMover)
         {
             _states = new Dictionary<Type, IExitableState>()
@@ -27,7 +27,7 @@ namespace Infrastructure
                 [typeof(LoadSceneState)] =
                     new LoadSceneState(this, sceneLoader, services.Single<IPlayerProgressService>(),
                         services.Single<ISaveLoadService>(), services.Single<IStaticDataService>(), tank, uiContainer,
-                        gameObjectsContainer, gameObjectsGenerator, gameObjectsMover),
+                        enemiesContainer, enemiesGenerator, gameObjectsMover),
                 [typeof(LoadPlayerProgressState)] =
                     new LoadPlayerProgressState(this, services.Single<IPlayerProgressService>(),
                         services.Single<ISaveLoadService>()),

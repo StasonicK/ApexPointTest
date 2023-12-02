@@ -1,6 +1,6 @@
 ﻿namespace GameObjects.Enemies
 {
-    public enum EnemyType
+    public enum EnemyTypeId
     {
         Enemy1 = 0,
         Enemy2 = 1,

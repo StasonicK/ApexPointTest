@@ -20,6 +20,7 @@ namespace GameObjects.Projectiles
             }
             else if (other.gameObject.CompareTag(EnemyTag))
             {
+                other.gameObject.SetActive(false);
                 Destroy(gameObject);
             }
         }

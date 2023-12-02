@@ -44,8 +44,8 @@ namespace Infrastructure
 
             _game = new Game(this, tank: _tank,
                 uiContainer: _uiContainer.GetComponent<UIContainer>(),
-                gameObjectsContainer: _objectsContainer.GetComponent<GameObjectsContainer>(),
-                gameObjectsGenerator: _objectsGenerator.GetComponent<GameObjectsGenerator>(),
+                enemiesContainer: _objectsContainer.GetComponent<EnemiesContainer>(),
+                enemiesGenerator: _objectsGenerator.GetComponent<EnemiesGenerator>(),
                 gameObjectsMover: _objectsGenerator.GetComponent<GameGameObjectsMover>());
             _game.StateMachine.Enter<BootstrapState>();
         }

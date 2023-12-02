@@ -14,9 +14,11 @@ namespace GameObjects.Tank
         private Vector2 _moveInput = Vector2.zero;
         private Vector2 _currentMoveInput = Vector2.zero;
         private bool _isEnabled;
+        private Rigidbody _rigidbody;
 
         private void Awake()
         {
+            _rigidbody = GetComponent<Rigidbody>();
             _characterController = GetComponent<CharacterController>();
             DontDestroyOnLoad(this);
         }
@@ -48,6 +50,7 @@ namespace GameObjects.Tank
                 _tankInput.Tank.Move.canceled += Stop;
             }
 
+            _rigidbody.isKinematic = false;
             _isEnabled = true;
         }
 
@@ -60,6 +63,7 @@ namespace GameObjects.Tank
                 _tankInput.Tank.Move.canceled -= Stop;
             }
 
+            _rigidbody.isKinematic = true;
             _isEnabled = false;
         }
 

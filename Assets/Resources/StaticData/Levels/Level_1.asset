@@ -14,9 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneId: 3
   GameLoopLevel: 1
-  TankSpawnPosition: {x: 0, y: 19.06, z: -0.52}
+  InitialTankPosition: {x: 0, y: -0.0000019073486, z: 15.000002}
   SecondsBetweenSpawns: 1
   KilledEnemiesVictoryCount: 3
   Enemy1Count: 2
   Enemy2Count: 2
   Reward: 2
+  EnemySpawners:
+  - {x: -20, y: 0, z: -20.000004}
+  - {x: -10, y: 0, z: -20.000004}
+  - {x: 20, y: 0, z: -20.000004}
+  - {x: 10, y: 0, z: -20.000004}
+  - {x: 0, y: 0, z: -20.000004}
+  - {x: -20, y: 0, z: -10.000002}
+  - {x: -10, y: 0, z: -10.000002}
+  - {x: 20, y: 0, z: -10.000002}
+  - {x: 10, y: 0, z: -10.000002}
+  - {x: 0, y: 0, z: -10.000002}
+  - {x: -20, y: 0, z: 20.000004}
+  - {x: -10, y: 0, z: 20.000004}
+  - {x: 20, y: 0, z: 20.000004}
+  - {x: 10, y: 0, z: 20.000004}
+  - {x: 0, y: 0, z: 20.000004}
+  - {x: -20, y: 0, z: 10.000002}
+  - {x: -10, y: 0, z: 10.000002}
+  - {x: 20, y: 0, z: 10.000002}
+  - {x: 10, y: 0, z: 10.000002}
+  - {x: 0, y: 0, z: 10.000002}
+  - {x: -20, y: 0, z: 0}
+  - {x: -10, y: 0, z: 0}
+  - {x: 20, y: 0, z: 0}
+  - {x: 10, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
