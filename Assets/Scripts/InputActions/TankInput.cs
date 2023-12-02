@@ -55,9 +55,18 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ChangeWeapon"",
+                    ""name"": ""ChangeWeapon1"",
                     ""type"": ""Button"",
                     ""id"": ""7a051b48-5944-417c-9e64-521be1a99f37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeWeapon2"",
+                    ""type"": ""Button"",
+                    ""id"": ""88700f9a-cc46-4dbb-b9cc-f89033813bc0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -149,18 +158,18 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ChangeWeapon"",
+                    ""action"": ""ChangeWeapon1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""955ed9a6-784e-45d5-9d8b-a45b6aef2f74"",
+                    ""id"": ""6c9dfbc2-6eee-4c67-b298-7d22ecc23641"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ChangeWeapon"",
+                    ""action"": ""ChangeWeapon2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -174,7 +183,8 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
         m_Tank_Move = m_Tank.FindAction("Move", throwIfNotFound: true);
         m_Tank_RotateHull = m_Tank.FindAction("RotateHull", throwIfNotFound: true);
         m_Tank_Shoot = m_Tank.FindAction("Shoot", throwIfNotFound: true);
-        m_Tank_ChangeWeapon = m_Tank.FindAction("ChangeWeapon", throwIfNotFound: true);
+        m_Tank_ChangeWeapon1 = m_Tank.FindAction("ChangeWeapon1", throwIfNotFound: true);
+        m_Tank_ChangeWeapon2 = m_Tank.FindAction("ChangeWeapon2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -237,7 +247,8 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Tank_Move;
     private readonly InputAction m_Tank_RotateHull;
     private readonly InputAction m_Tank_Shoot;
-    private readonly InputAction m_Tank_ChangeWeapon;
+    private readonly InputAction m_Tank_ChangeWeapon1;
+    private readonly InputAction m_Tank_ChangeWeapon2;
     public struct TankActions
     {
         private @TankInput m_Wrapper;
@@ -245,7 +256,8 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Tank_Move;
         public InputAction @RotateHull => m_Wrapper.m_Tank_RotateHull;
         public InputAction @Shoot => m_Wrapper.m_Tank_Shoot;
-        public InputAction @ChangeWeapon => m_Wrapper.m_Tank_ChangeWeapon;
+        public InputAction @ChangeWeapon1 => m_Wrapper.m_Tank_ChangeWeapon1;
+        public InputAction @ChangeWeapon2 => m_Wrapper.m_Tank_ChangeWeapon2;
         public InputActionMap Get() { return m_Wrapper.m_Tank; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -264,9 +276,12 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_TankActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_TankActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_TankActionsCallbackInterface.OnShoot;
-                @ChangeWeapon.started -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon;
-                @ChangeWeapon.performed -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon;
-                @ChangeWeapon.canceled -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon;
+                @ChangeWeapon1.started -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon1;
+                @ChangeWeapon1.performed -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon1;
+                @ChangeWeapon1.canceled -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon1;
+                @ChangeWeapon2.started -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon2;
+                @ChangeWeapon2.performed -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon2;
+                @ChangeWeapon2.canceled -= m_Wrapper.m_TankActionsCallbackInterface.OnChangeWeapon2;
             }
             m_Wrapper.m_TankActionsCallbackInterface = instance;
             if (instance != null)
@@ -280,9 +295,12 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
-                @ChangeWeapon.started += instance.OnChangeWeapon;
-                @ChangeWeapon.performed += instance.OnChangeWeapon;
-                @ChangeWeapon.canceled += instance.OnChangeWeapon;
+                @ChangeWeapon1.started += instance.OnChangeWeapon1;
+                @ChangeWeapon1.performed += instance.OnChangeWeapon1;
+                @ChangeWeapon1.canceled += instance.OnChangeWeapon1;
+                @ChangeWeapon2.started += instance.OnChangeWeapon2;
+                @ChangeWeapon2.performed += instance.OnChangeWeapon2;
+                @ChangeWeapon2.canceled += instance.OnChangeWeapon2;
             }
         }
     }
@@ -292,6 +310,7 @@ public partial class @TankInput : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRotateHull(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnChangeWeapon(InputAction.CallbackContext context);
+        void OnChangeWeapon1(InputAction.CallbackContext context);
+        void OnChangeWeapon2(InputAction.CallbackContext context);
     }
 }

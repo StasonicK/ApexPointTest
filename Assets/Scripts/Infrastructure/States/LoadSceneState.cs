@@ -1,5 +1,6 @@
 ﻿using System;
 using Audio;
+using Cameras;
 using GameObjects.Tank;
 using Pool;
 using Services.PersistentProgress;
@@ -24,23 +25,25 @@ namespace Infrastructure.States
         private SceneId _sceneId;
         private bool _isInitial = true;
         private GameObject _tank;
-        private IObjectsContainer _objectsContainer;
-        private IObjectsGenerator _objectsGenerator;
+        private IGameObjectsContainer _gameObjectsContainer;
+        private IGameObjectsGenerator _gameObjectsGenerator;
         private IUIContainer _uiContainer;
         private LevelStaticData _levelStaticData;
         private Vector3 _tankSpawnPosition;
         private TankMovement _tankMovement;
-        private IObjectsMover _objectsMover;
+        private IGameObjectsMover _gameObjectsMover;
         private TankRotation _tankRotation;
         private TankShooting _tankShooting;
+        private TankWeaponChanger _tankWeaponChanger;
 
         public LoadSceneState(IGameStateMachine gameGameStateMachine, ISceneLoader sceneLoader,
             IPlayerProgressService playerProgressService, ISaveLoadService saveLoadService,
             IStaticDataService staticDataService, GameObject tank, IUIContainer uiContainer,
-            IObjectsContainer objectsContainer, IObjectsGenerator objectsGenerator, IObjectsMover objectsMover)
+            IGameObjectsContainer gameObjectsContainer, IGameObjectsGenerator gameObjectsGenerator,
+            IGameObjectsMover gameObjectsMover)
         {
-            _objectsGenerator = objectsGenerator;
-            _objectsMover = objectsMover;
+            _gameObjectsGenerator = gameObjectsGenerator;
+            _gameObjectsMover = gameObjectsMover;
             _gameStateMachine = gameGameStateMachine;
             _sceneLoader = sceneLoader;
             _playerProgressService = playerProgressService;
@@ -48,10 +51,11 @@ namespace Infrastructure.States
             _staticDataService = staticDataService;
             _tank = tank;
             _uiContainer = uiContainer;
-            _objectsContainer = objectsContainer;
+            _gameObjectsContainer = gameObjectsContainer;
             _tankMovement = _tank.GetComponent<TankMovement>();
             _tankRotation = _tank.GetComponentInChildren<TankRotation>();
             _tankShooting = _tank.GetComponentInChildren<TankShooting>();
+            _tankWeaponChanger = _tank.GetComponentInChildren<TankWeaponChanger>();
         }
 
         public void Enter(SceneId sceneId)
@@ -77,8 +81,8 @@ namespace Infrastructure.States
         private void ClearGameWorld()
         {
             _tank.SetActive(false);
-            _objectsContainer.GameObject.SetActive(false);
-            _objectsGenerator.GameObject.SetActive(false);
+            _gameObjectsContainer.GameObject.SetActive(false);
+            _gameObjectsGenerator.GameObject.SetActive(false);
             _uiContainer.HideAll();
         }
 
@@ -92,16 +96,16 @@ namespace Infrastructure.States
                 InitializeGameWorld(_levelStaticData);
                 InstantiateGameObjects();
                 InitializeGameObjects();
-                // _uiContainer.ShowStartGameWindow();
+                CameraFollow(_tank);
             }
         }
 
         private void InitializeUIRoot(int victoryCount)
         {
             _uiContainer.GameObject.SetActive(true);
-            _uiContainer.StartGameWindow.Construct(_objectsMover, _objectsGenerator, _uiContainer.GameScreen,
-                _tankMovement, _tankRotation, _tankShooting);
-            _uiContainer.GameOverWindow.Construct(_objectsGenerator, _tankMovement, _tankRotation, _tankShooting,
+            _uiContainer.StartGameWindow.Construct(_gameObjectsMover, _gameObjectsGenerator, _uiContainer.GameScreen,
+                _tankMovement, _tankRotation, _tankShooting, _tankWeaponChanger);
+            _uiContainer.GameOverWindow.Construct(_gameObjectsGenerator, _tankMovement, _tankRotation, _tankShooting,
                 _gameStateMachine);
             _uiContainer.FinishLevelWindow.Construct(_sceneId, victoryCount);
             _uiContainer.Construct();
@@ -118,10 +122,10 @@ namespace Infrastructure.States
         private void InitializeGameWorld(LevelStaticData levelData)
         {
             _tankSpawnPosition = levelData.TankSpawnPosition;
-            _objectsGenerator.Construct(levelData.Enemy1Count, levelData.Enemy2Count,
-                levelData.SecondsBetweenSpawns, _objectsContainer);
-            _objectsMover.Construct(_objectsGenerator);
-            _objectsContainer.GameObject.SetActive(true);
+            _gameObjectsGenerator.Construct(levelData.Enemy1Count, levelData.Enemy2Count,
+                levelData.SecondsBetweenSpawns, _gameObjectsContainer);
+            _gameObjectsMover.Construct(_gameObjectsGenerator);
+            _gameObjectsContainer.GameObject.SetActive(true);
         }
 
         private void InstantiateGameObjects()
@@ -134,8 +138,10 @@ namespace Infrastructure.States
         {
             _tankMovement.Construct(_levelStaticData.TankSpawnPosition);
             _tankRotation.Construct();
+            _tankWeaponChanger.Construct();
+            _tankShooting.Construct(_tankWeaponChanger);
             _tank.GetComponent<TankHealth>().Construct(_tankMovement, _tank.GetComponent<TankDeath>(),
-                _tank.GetComponent<TankHit>(), _objectsMover, _uiContainer.GameOverWindow);
+                _tank.GetComponent<TankHit>(), _gameObjectsMover, _uiContainer.GameOverWindow);
         }
 
         private void LaunchAudioManager()
@@ -151,5 +157,8 @@ namespace Infrastructure.States
                 AudioManager.Instance.Mute();
             }
         }
+
+        private void CameraFollow(GameObject tank) =>
+            Camera.main.GetComponent<CameraTankFollower>().Follow(tank);
     }
 }

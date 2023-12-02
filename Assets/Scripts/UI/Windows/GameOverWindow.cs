@@ -14,7 +14,7 @@ namespace UI.Windows
         [SerializeField] protected Button _restartButton;
         [SerializeField] protected Button _toMainButton;
 
-        private IObjectsGenerator _objectsGenerator;
+        private IGameObjectsGenerator _gameObjectsGenerator;
         private TankMovement _tankMovement;
         private TankRotation _tankRotation;
         private TankShooting _tankShooting;
@@ -23,14 +23,15 @@ namespace UI.Windows
         public event Action RestartButtonClicked;
         public event Action ToMainButtonClicked;
 
-        public void Construct(IObjectsGenerator objectsGenerator, TankMovement tankMovement, TankRotation tankRotation,
+        public void Construct(IGameObjectsGenerator gameObjectsGenerator, TankMovement tankMovement,
+            TankRotation tankRotation,
             TankShooting tankShooting, IGameStateMachine gameStateMachine)
         {
             _gameStateMachine = gameStateMachine;
             _tankShooting = tankShooting;
             _tankRotation = tankRotation;
             _tankMovement = tankMovement;
-            _objectsGenerator = objectsGenerator;
+            _gameObjectsGenerator = gameObjectsGenerator;
         }
 
         public void Open()
@@ -53,7 +54,7 @@ namespace UI.Windows
             _tankMovement.Off();
             _tankRotation.Off();
             _tankShooting.Off();
-            _objectsGenerator.Reset();
+            _gameObjectsGenerator.Reset();
             RestartButtonClicked?.Invoke();
             Close();
         }
@@ -63,7 +64,7 @@ namespace UI.Windows
             _tankMovement.Off();
             _tankRotation.Off();
             _tankShooting.Off();
-            _objectsGenerator.Reset();
+            _gameObjectsGenerator.Reset();
             ToMainButtonClicked?.Invoke();
             Close();
             _gameStateMachine.Enter<LoadSceneState, SceneId>(SceneId.Main);

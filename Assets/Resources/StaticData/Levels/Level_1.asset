@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SceneId: 3
   GameLoopLevel: 1
-  TankSpawnPosition: {x: 0, y: 0, z: 0}
+  TankSpawnPosition: {x: 0, y: 19.06, z: -0.52}
   SecondsBetweenSpawns: 1
   KilledEnemiesVictoryCount: 3
   Enemy1Count: 2

@@ -63,7 +63,7 @@ namespace GameObjects.Tank
             _isEnabled = false;
         }
 
-        private void Stop(InputAction.CallbackContext obj) => 
+        private void Stop(InputAction.CallbackContext obj) =>
             _moveInput = Vector2.zero;
 
         private void Move(InputAction.CallbackContext ctx)

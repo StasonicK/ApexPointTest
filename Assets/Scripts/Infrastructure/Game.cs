@@ -11,11 +11,12 @@ namespace Infrastructure
         [HideInInspector] public GameStateMachine StateMachine;
 
         public Game(ICoroutineRunner coroutineRunner, GameObject tank, IUIContainer uiContainer,
-            IObjectsContainer objectsContainer, IObjectsGenerator objectsGenerator, IObjectsMover objectsMover)
+            IGameObjectsContainer gameObjectsContainer, IGameObjectsGenerator gameObjectsGenerator,
+            IGameObjectsMover gameObjectsMover)
         {
             StateMachine =
                 new GameStateMachine(new SceneLoader(coroutineRunner), AllServices.Container, tank: tank,
-                    uiContainer: uiContainer, objectsContainer, objectsGenerator, objectsMover);
+                    uiContainer: uiContainer, gameObjectsContainer, gameObjectsGenerator, gameObjectsMover);
         }
 
         private void OnDestroy() =>

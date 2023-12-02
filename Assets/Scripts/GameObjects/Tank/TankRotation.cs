@@ -53,7 +53,7 @@ namespace GameObjects.Tank
             _isEnabled = true;
         }
 
-        private void Rotate(InputAction.CallbackContext ctx) => 
+        private void Rotate(InputAction.CallbackContext ctx) =>
             _rotateInput = new Vector3(0f, ctx.ReadValue<Vector2>().x, 0f);
 
         private void Stop(InputAction.CallbackContext ctx) =>

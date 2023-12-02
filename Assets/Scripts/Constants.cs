@@ -27,11 +27,4 @@
     public const string AnimationButtonIdle = "Idle";
     public const string AnimationChangeScaleButton = "ChangeScale";
     public const string AnimationLanternShow = "Show";
-
-    public const string RocketTag = "Rocket";
-    public const string ShurikenTag = "Shuriken";
-    public const string LanternTag = "Lantern";
-    public const string FanTag = "Fan";
-    public const string DragonTag = "Dragon";
-    public const string AirWaveZoneTag = "AirWaveZone";
 }

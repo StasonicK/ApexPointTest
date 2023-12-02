@@ -13,33 +13,37 @@ namespace UI.Windows
         [SerializeField] protected Button _playButton;
         [SerializeField] protected Animator _playButtonAnimator;
 
-        private IObjectsMover _objectsMover;
-        private IObjectsGenerator _objectsGenerator;
+        private IGameObjectsMover _gameObjectsMover;
+        private IGameObjectsGenerator _gameObjectsGenerator;
         private GameScreen _gameScreen;
         private TankMovement _tankMovement;
         private TankRotation _tankRotation;
         private TankShooting _tankShooting;
+        private TankWeaponChanger _tankWeaponChanger;
 
         public event Action PlayButtonClicked;
 
-        public void Construct(IObjectsMover objectsMover, IObjectsGenerator objectsGenerator, GameScreen gameScreen,
-            TankMovement tankMovement, TankRotation tankRotation, TankShooting tankShooting)
+        public void Construct(IGameObjectsMover gameObjectsMover, IGameObjectsGenerator gameObjectsGenerator,
+            GameScreen gameScreen, TankMovement tankMovement, TankRotation tankRotation, TankShooting tankShooting,
+            TankWeaponChanger tankWeaponChanger)
         {
+            _tankWeaponChanger = tankWeaponChanger;
             _tankShooting = tankShooting;
             _tankRotation = tankRotation;
             _tankMovement = tankMovement;
             _gameScreen = gameScreen;
-            _objectsGenerator = objectsGenerator;
-            _objectsMover = objectsMover;
+            _gameObjectsGenerator = gameObjectsGenerator;
+            _gameObjectsMover = gameObjectsMover;
         }
 
         public void Open()
         {
-            _objectsMover.Stop();
-            _objectsGenerator.Off();
+            _gameObjectsMover.Stop();
+            _gameObjectsGenerator.Off();
             _tankRotation.Off();
             _tankMovement.Off();
             _tankShooting.Off();
+            _tankWeaponChanger.Off();
             gameObject.SetActive(true);
             _playButtonAnimator.Play(Constants.AnimationButtonRotation);
             _playButton.onClick.AddListener(OnPlayButtonClick);
@@ -49,11 +53,12 @@ namespace UI.Windows
         {
             _playButton.onClick.RemoveListener(OnPlayButtonClick);
             _gameScreen.gameObject.SetActive(true);
-            _objectsMover.Run();
-            _objectsGenerator.On();
+            _gameObjectsMover.Run();
+            _gameObjectsGenerator.On();
             _tankRotation.On();
             _tankMovement.On();
             _tankShooting.On();
+            _tankWeaponChanger.On();
             PlayButtonClicked?.Invoke();
             AudioManager.Instance.PlayAudio(AudioTrack.ClickSoundFx, false, AudioLayer.Sound);
             gameObject.SetActive(false);

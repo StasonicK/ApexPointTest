@@ -1,27 +1,10 @@
-﻿using UnityEngine;
-
-namespace GameObjects
+﻿namespace GameObjects
 {
-    public class GameObjectMovement : MonoBehaviour
+    public interface IGameObjectMovement
     {
-        [SerializeField] private float _speed;
+        bool IsRun { get; }
 
-        private bool _isRun;
-        protected int DirectionMultiplier;
-
-        private void OnEnable() =>
-            DirectionMultiplier = 1;
-
-        private void Update()
-        {
-            if (_isRun)
-                transform.Translate(0f, _speed * -DirectionMultiplier * Time.deltaTime, 0f);
-        }
-
-        public void Run() =>
-            _isRun = true;
-
-        public void Stop() =>
-            _isRun = false;
+        public void Run();
+        public void Stop();
     }
 }

@@ -15,13 +15,13 @@ namespace GameObjects.Tank
         private TankDeath _tankDeath;
         private GameOverWindow _gameOverWindow;
         private TankHit _tankHit;
-        private IObjectsMover _objectsMover;
+        private IGameObjectsMover _gameObjectsMover;
 
         public void Construct(TankMovement tankMovement, TankDeath tankDeath,
-            TankHit tankHit, IObjectsMover objectsMover,
+            TankHit tankHit, IGameObjectsMover gameObjectsMover,
             GameOverWindow gameOverWindow)
         {
-            _objectsMover = objectsMover;
+            _gameObjectsMover = gameObjectsMover;
             _tankHit = tankHit;
             _gameOverWindow = gameOverWindow;
             _tankDeath = tankDeath;
@@ -44,7 +44,7 @@ namespace GameObjects.Tank
         {
             _tankDeath.Show();
             _tankMovement.Off();
-            _objectsMover.Stop();
+            _gameObjectsMover.Stop();
             _gameOverWindow.Open();
         }
     }
